@@ -103,3 +103,46 @@ pipeline {
         }
     }
 }
+
+
+// pipeline {
+//   agent {
+//     kubernetes {
+//       yaml '''
+//         apiVersion: v1
+//         kind: Pod
+//         spec:
+//           containers:
+//           - name: maven
+//             image: busybox
+//             command:
+//             - sh
+//             - -c
+//             - |
+//               mkdir -p /usr/local/bin && \
+//               wget --no-check-certificate -q -O /usr/local/bin/kubectl https://dl.k8s.io/release/$(wget --no-check-certificate -q -O - https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
+//               chmod +x /usr/local/bin/kubectl && \
+//               sleep infinity
+//             tty: true
+//           restartPolicy: Never
+//       '''
+//     }
+//   }
+//   stages {
+//     stage('Verify kubectl') {
+//       steps {
+//         container('maven') {
+//           sh 'kubectl version --client'
+//         }
+//       }
+//     }
+//     stage('List files') {
+//       steps {
+//         container('maven') {
+//           sh 'ls -la /usr/local/bin'
+//         }
+//       }
+//     }
+//   }
+// }
+
