@@ -3,13 +3,24 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        GIT_CREDENTIALS_ID = 'github-credentials'
+
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Lấy source code từ GitHub
-                git branch: 'main', url: 'https://github.com/username/my-repo.git'
+                script {
+                    // Checkout code từ GitHub repository sử dụng Jenkins GitSCM
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/master']],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/nguyenhung1402/repo_dev.git',
+                            credentialsId: GIT_CREDENTIALS_ID
+                        ]]
+                    ])
+                }
             }
         }
         
