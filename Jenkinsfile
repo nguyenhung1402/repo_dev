@@ -140,7 +140,7 @@ pipeline {
                     steps {
                         container('maven') {
                         sh '''
-                            kubectl set image deployment/user-depl user=nguyenhung1402/user_jenkins:${DOCKER_TAG} 
+                            kubectl set image deployment/user-depl user=nguyenhung1402/user_jenkins:${DOCKER_TAG} -n default
                             kubectl rollout status deployment/user-depl
                         '''
                         }
@@ -153,7 +153,7 @@ pipeline {
                     steps {
                         container('maven') {
                         sh '''
-                            kubectl set image deployment/company-depl  company=nguyenhung1402/company_jenkins:${DOCKER_TAG} 
+                            kubectl set image deployment/company-depl  company=nguyenhung1402/company_jenkins:${DOCKER_TAG} -n default
                             kubectl rollout status deployment/company-depl 
                         '''
                         }
@@ -166,7 +166,7 @@ pipeline {
                     steps {
                         container('maven') {
                         sh '''
-                            kubectl set image deployment/job-depl job=nguyenhung1402/job_jenkins:${DOCKER_TAG} 
+                            kubectl set image deployment/job-depl job=nguyenhung1402/job_jenkins:${DOCKER_TAG} -n default
                             kubectl rollout status deployment/job-depl
                         '''
                         }
