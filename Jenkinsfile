@@ -132,40 +132,46 @@ pipeline {
                     sh 'kubectl get node'
                     }
                 }
-                when {
-                expression { env.BUILD_SERVICE3 == "true" }
                 }
-                steps {
-                    container('maven') {
-                    sh '''
-                        kubectl set image deployment/user-depl user=nguyenhung1402/user_jenkins:${DOCKER_TAG} 
-                        kubectl rollout status deployment/user-depl
-                    '''
+                stage('deploy user'){
+                    when {
+                    expression { env.BUILD_SERVICE3 == "true" }
+                    }
+                    steps {
+                        container('maven') {
+                        sh '''
+                            kubectl set image deployment/user-depl user=nguyenhung1402/user_jenkins:${DOCKER_TAG} 
+                            kubectl rollout status deployment/user-depl
+                        '''
+                        }
                     }
                 }
-                when {
-                expression { env.BUILD_SERVICE2 == "true" }
-                }
-                steps {
-                    container('maven') {
-                    sh '''
-                        kubectl set image deployment/company-depl  company=nguyenhung1402/company_jenkins:${DOCKER_TAG} 
-                        kubectl rollout status deployment/company-depl 
-                    '''
+                stage('deploy company'){
+                    when {
+                    expression { env.BUILD_SERVICE2 == "true" }
+                    }
+                    steps {
+                        container('maven') {
+                        sh '''
+                            kubectl set image deployment/company-depl  company=nguyenhung1402/company_jenkins:${DOCKER_TAG} 
+                            kubectl rollout status deployment/company-depl 
+                        '''
+                        }
                     }
                 }
-                when {
-                expression { env.BUILD_SERVICE1 == "true" }
-                }
-                steps {
-                    container('maven') {
-                    sh '''
-                        kubectl set image deployment/job-depl job=nguyenhung1402/job_jenkins:${DOCKER_TAG} 
-                        kubectl rollout status deployment/job-depl
-                    '''
+                stage('deploy job'){
+                    when {
+                    expression { env.BUILD_SERVICE1 == "true" }
+                    }
+                    steps {
+                        container('maven') {
+                        sh '''
+                            kubectl set image deployment/job-depl job=nguyenhung1402/job_jenkins:${DOCKER_TAG} 
+                            kubectl rollout status deployment/job-depl
+                        '''
+                        }
                     }
                 }
-            }
                 
                 
             }
