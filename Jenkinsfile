@@ -129,7 +129,7 @@ pipeline {
                 stage('Verify kubectl') {
                 steps {
                     container('maven') {
-                    sh 'kubectl get node'
+                    sh 'kubectl get deployments'
                     }
                 }
                 }
