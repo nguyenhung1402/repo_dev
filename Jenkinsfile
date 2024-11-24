@@ -128,7 +128,7 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: maven
+          - name: k8s
             image: busybox
             command:
             - sh
@@ -146,7 +146,7 @@ pipeline {
             stages {
                 stage('Verify kubectl') {
                 steps {
-                    container('maven') {
+                    container('k8s') {
                     sh 'kubectl get deployments -n default'
                     }
                 }
@@ -156,7 +156,7 @@ pipeline {
                     expression { env.BUILD_SERVICE3 == "true" }
                     }
                     steps {
-                        container('maven') {
+                        container('k8s') {
                         sh '''
                             kubectl set image deployment/user-depl user=nguyenhung1402/user_jenkins:${DOCKER_TAG} -n default
                             
@@ -169,7 +169,7 @@ pipeline {
                     expression { env.BUILD_SERVICE2 == "true" }
                     }
                     steps {
-                        container('maven') {
+                        container('k8s') {
                         sh '''
                             kubectl set image deployment/company-depl  company=nguyenhung1402/company_jenkins:${DOCKER_TAG} -n default
                             
@@ -182,7 +182,7 @@ pipeline {
                     expression { env.BUILD_SERVICE1 == "true" }
                     }
                     steps {
-                        container('maven') {
+                        container('k8s') {
                         sh '''
                             kubectl set image deployment/job-depl job=nguyenhung1402/job_jenkins:${DOCKER_TAG} -n default
                             
