@@ -24,23 +24,23 @@ pipeline {
             }
         }
         
-        stage('SonarQube Analysis') {
-            environment {
-                scannerHome = tool 'SonarScanner' // Tên SonarScanner trong Global Tool Configuration
-            }
-            steps {
-                withSonarQubeEnv('SonarQube') { // Tên server đã cấu hình
-                    sh """
-                        ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=nguyenhung1402jenkins \
-                        -Dsonar.organization=nguyenhung1402jenkins \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=https://sonarcloud.io \
-                        -Dsonar.login=${SONAR_TOKEN}
-                    """
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     environment {
+        //         scannerHome = tool 'SonarScanner' // Tên SonarScanner trong Global Tool Configuration
+        //     }
+        //     steps {
+        //         withSonarQubeEnv('SonarQube') { // Tên server đã cấu hình
+        //             sh """
+        //                 ${scannerHome}/bin/sonar-scanner \
+        //                 -Dsonar.projectKey=nguyenhung1402jenkins \
+        //                 -Dsonar.organization=nguyenhung1402jenkins \
+        //                 -Dsonar.sources=. \
+        //                 -Dsonar.host.url=https://sonarcloud.io \
+        //                 -Dsonar.login=${SONAR_TOKEN}
+        //             """
+        //         }
+        //     }
+        // }
 
         stage('Generate Docker Tag') {
             steps {
